@@ -93,3 +93,37 @@ def lowerEnvelopeSkew(df):
     dfLossCost = pd.DataFrame(loss_costs)
 
     return(dfLossCost)
+
+
+def lowerEnvelopeNB(df, piP=np.nan):
+
+    # use class distribution in data unless piP is specified
+    if np.isnan(piP):
+        nN = np.sum(df.label==0)
+        nP = np.sum(df.label==1)
+        piP = nP/(nP+nN)
+    
+    piN = 1-piP
+    n = nN+nP
+
+    # get best loss for each cost
+    nb_costs = []
+    for c in np.arange(0,1.01, 0.01):
+        
+        #loss = 2*((1-c)*piP*(1-df['tpr']) + c*piN*df['fpr'])
+        #nb = df['tpr']*nP/n - (df['fpr']*nN/n)*(c/(1-c))
+        
+        nb = piP*df['tpr'] - (c/(1-c))*piN*df['fpr']
+        
+
+        maxNB = max(nb)
+
+        # the point with lowest loss doesn't have c==t
+        #print(c, ': ', df.score[np.argmin(loss)])
+
+        nb_cost = {'cost':c, 'nb':maxNB}
+        nb_costs.append(nb_cost)
+
+    dfNBCost = pd.DataFrame(nb_costs)
+
+    return(dfNBCost)
