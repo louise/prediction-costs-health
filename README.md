@@ -43,7 +43,7 @@ always choose the same point on the ROC curve as the 'best' (for a given cost pr
 net benefit values across cost proportions. In contrast, loss (for Brier curves) does not change much across cost proportions.
 
 
-### Notebook 4: 
+### Notebook 4: Exploring some properties of Brier curves vs decision curves
 
 This notebook shows:
 
