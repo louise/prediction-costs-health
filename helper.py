@@ -66,6 +66,36 @@ def lowerEnvelope(df, piP=np.nan):
 
     return(dfLossCost)
 
+def lowerEnvelopeFlip(df, piP=np.nan):
+
+    # use class distribution in data unless piP is specified
+    if np.isnan(piP):
+        # labels are flipped
+        nN = np.sum(df.label==1)
+        nP = np.sum(df.label==0)
+        piP = nP/(nP+nN)
+    
+    piN = 1-piP
+
+    # get best loss for each cost
+    loss_costs = []
+    for c in np.arange(0,1.01, 0.01):
+        
+        # flipping means tpr becomes 1-fpr and fpr becomes 1-tpr
+        loss = 2*((1-c)*piP*(df['fpr']) + c*piN*(1-df['tpr']))
+        
+        minLoss = min(loss)
+
+        # the point with lowest loss doesn't have c==t
+        #print(c, ': ', df.score[np.argmin(loss)])
+
+        loss_cost = {'cost':c, 'loss':minLoss}
+        loss_costs.append(loss_cost)
+
+    dfLossCost = pd.DataFrame(loss_costs)
+
+    return(dfLossCost)
+
 
 def lowerEnvelopeSkew(df):
 
@@ -114,6 +144,39 @@ def lowerEnvelopeNB(df, piP=np.nan):
         #nb = df['tpr']*nP/n - (df['fpr']*nN/n)*(c/(1-c))
         
         nb = piP*df['tpr'] - (c/(1-c))*piN*df['fpr']
+        
+
+        maxNB = max(nb)
+
+        # the point with lowest loss doesn't have c==t
+        #print(c, ': ', df.score[np.argmin(loss)])
+
+        nb_cost = {'cost':c, 'nb':maxNB}
+        nb_costs.append(nb_cost)
+
+    dfNBCost = pd.DataFrame(nb_costs)
+
+    return(dfNBCost)
+
+
+def lowerEnvelopeNBFlip(df, piP=np.nan):
+
+    # use class distribution in data unless piP is specified
+    if np.isnan(piP):
+        # labels are flipped
+        nN = np.sum(df.label==1)
+        nP = np.sum(df.label==0)
+        piP = nP/(nP+nN)
+    
+    piN = 1-piP
+    n = nN+nP
+
+    # get best loss for each cost
+    nb_costs = []
+    for c in np.arange(0,1.01, 0.01):
+        
+        # flipping means tpr becomes 1-fpr and fpr becomes 1-tpr
+        nb = piP*(1-df['fpr']) - (c/(1-c))*piN*(1-df['tpr'])
         
 
         maxNB = max(nb)
