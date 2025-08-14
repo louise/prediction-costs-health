@@ -125,7 +125,7 @@ def lowerEnvelopeSkew(df):
     return(dfLossCost)
 
 
-def lowerEnvelopeNB(df, piP=np.nan):
+def lowerEnvelopeNB(df, piP=np.nan, brierCosts=False):
 
     # use class distribution in data unless piP is specified
     if np.isnan(piP):
@@ -142,9 +142,10 @@ def lowerEnvelopeNB(df, piP=np.nan):
         
         #loss = 2*((1-c)*piP*(1-df['tpr']) + c*piN*df['fpr'])
         #nb = df['tpr']*nP/n - (df['fpr']*nN/n)*(c/(1-c))
-        
-        nb = piP*df['tpr'] - (c/(1-c))*piN*df['fpr']
-        
+        if (brierCosts==False):
+            nb = piP*df['tpr'] - (c/(1-c))*piN*df['fpr']
+        else:
+            nb = (1-c)*piP*df['tpr'] - c*piN*df['fpr']
 
         maxNB = max(nb)
 
