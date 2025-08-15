@@ -191,3 +191,35 @@ def lowerEnvelopeNBFlip(df, piP=np.nan):
     dfNBCost = pd.DataFrame(nb_costs)
 
     return(dfNBCost)
+
+
+
+def lowerEnvelopeDCALoss(df, piP=np.nan):
+
+    # use class distribution in data unless piP is specified
+    if np.isnan(piP):
+        nN = np.sum(df.label==0)
+        nP = np.sum(df.label==1)
+        piP = nP/(nP+nN)
+    
+    piN = 1-piP
+
+    # get best loss for each cost
+    loss_costs = []
+    for c in np.arange(0,1.01, 0.01):
+        
+        #loss = 2*(c*pi_1*(1-df['tpr']) + (1-c)*pi_0*df['fpr'])
+        #loss = 2*((1-c)*piP*(1-df['tpr']) + c*piN*df['fpr'])
+        loss = piP*(1-df['tpr']) + (c/(1-c))*piN*df['fpr']
+
+        minLoss = min(loss)
+
+        # the point with lowest loss doesn't have c==t
+        #print(c, ': ', df.score[np.argmin(loss)])
+
+        loss_cost = {'cost':c, 'loss':minLoss}
+        loss_costs.append(loss_cost)
+
+    dfLossCost = pd.DataFrame(loss_costs)
+
+    return(dfLossCost)
