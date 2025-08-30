@@ -140,17 +140,12 @@ def lowerEnvelopeNB(df, piP=np.nan, brierCosts=False):
     nb_costs = []
     for c in np.arange(0,1.01, 0.01):
         
-        #loss = 2*((1-c)*piP*(1-df['tpr']) + c*piN*df['fpr'])
-        #nb = df['tpr']*nP/n - (df['fpr']*nN/n)*(c/(1-c))
         if (brierCosts==False):
             nb = piP*df['tpr'] - (c/(1-c))*piN*df['fpr']
         else:
-            nb = (1-c)*piP*df['tpr'] - c*piN*df['fpr']
+            nb = 2*(1-c)*piP*df['tpr'] - 2*c*piN*df['fpr']
 
         maxNB = max(nb)
-
-        # the point with lowest loss doesn't have c==t
-        #print(c, ': ', df.score[np.argmin(loss)])
 
         nb_cost = {'cost':c, 'nb':maxNB}
         nb_costs.append(nb_cost)
