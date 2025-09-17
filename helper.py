@@ -125,7 +125,7 @@ def lowerEnvelopeSkew(df):
     return(dfLossCost)
 
 
-def lowerEnvelopeNB(df, piP=np.nan, brierCosts=False):
+def upperEnvelopeNB(df, piP=np.nan, brierCosts=False):
 
     # use class distribution in data unless piP is specified
     if np.isnan(piP):
@@ -155,7 +155,7 @@ def lowerEnvelopeNB(df, piP=np.nan, brierCosts=False):
     return(dfNBCost)
 
 
-def lowerEnvelopeNBFlip(df, piP=np.nan):
+def upperEnvelopeNBFlip(df, piP=np.nan):
 
     # use class distribution in data unless piP is specified
     if np.isnan(piP):
