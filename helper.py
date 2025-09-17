@@ -97,33 +97,6 @@ def lowerEnvelopeFlip(df, piP=np.nan):
     return(dfLossCost)
 
 
-def lowerEnvelopeSkew(df):
-
-    # use class distribution in data unless piP is specified
-
-    nN = np.sum(df.label==0)
-    nP = np.sum(df.label==1)
-    piP = nP/(nP+nN)    
-    piN = 1-piP
-
-    # get best loss for each cost
-    loss_costs = []
-    for skew in np.arange(0,1.01, 0.01):
-        
-        loss = (1-skew)*(1-df['tpr']) + skew*df['fpr']
-        
-        minLoss = min(loss)
-
-        # the point with lowest loss doesn't have c==t
-        #print(c, ': ', df.score[np.argmin(loss)])
-
-        loss_cost = {'skew':skew, 'loss':minLoss}
-        loss_costs.append(loss_cost)
-
-    dfLossCost = pd.DataFrame(loss_costs)
-
-    return(dfLossCost)
-
 
 def upperEnvelopeNB(df, piP=np.nan, brierCosts=False):
 
