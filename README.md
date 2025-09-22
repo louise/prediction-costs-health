@@ -1,5 +1,5 @@
 
-# Costs in prediction modelling for health
+# Using costs or utilities in prediction modelling for health
 
 
 ## Paper details
@@ -21,8 +21,8 @@ This notebook:
 - Plots cost lines for each point on the ROC curve, showing how this produces the lower envelope (the standard definition of a cost curve)
 - Plots lower envelope cost curve from ROC curve, without using the predicted scores.
 - Plots Brier curve and cost curve together, showing the decomposition of Brier score into refinement and calibration loss.
-- Show that the Brier curve for calibrated scores equals the lower envelope cost curve.
-- Plots decision curve for this ROC curve
+- Shows that the Brier curve for calibrated scores equals the lower envelope cost curve.
+- Plots decision curve for this ROC curve.
 - Show that 'upper envelope' decision curve can be plotted to show the best net benefit possible for this ROC curve, which would be seen if the
 scores were calibrated.
 - Show that calibrated probabilities do result in the 'upper envelope' decision curve.
@@ -31,7 +31,7 @@ scores were calibrated.
 
 ### Notebook 2: Cost curve illustration
 
-This notebook uses a toy example model output with 9 examples, to demonstrate cost curves and Brier curves, including:
+This notebook uses some toy model output with 9 examples, to demonstrate cost curves and Brier curves, including:
 - How cost lines in cost space each correspond to a particular point in ROC space (point-line duality).
 - The typical definition of a cost curve as the lower envelope of all cost lines for a given ROC curve (independent of model scores).
 - Brier curves as the cost curve when using the probabilistic threshold choice method.
@@ -41,9 +41,9 @@ This notebook uses a toy example model output with 9 examples, to demonstrate co
 
 This notebook shows isometrics for net benefit and Brier curves in ROC space, demonstrating:
 - How the cost affects the gradient of these isometrics and which points in ROC space have equal net benefit or loss.
-- The gradient of these isometrics is the same for net benefit and loss, for a given cost proportion, such that these measures will
+- The gradient of these isometrics is the same for net benefit and Brier loss, for a given cost proportion, such that these measures will
 always choose the same point on the ROC curve as the 'best' (for a given cost proportion).
-- When the cost prooprtion is high the net benefit isometrics become much closer than for loss, showing the big change in the range of possible 
+- When the cost proportion is high the net benefit isometrics become much closer than for loss, showing the big change in the range of possible 
 net benefit values across cost proportions. In contrast, loss (for Brier curves) does not change much across cost proportions.
 
 
@@ -54,7 +54,7 @@ This notebook shows:
 - What happens for decision curves and Brier curves when the classes are swapped, i.e. when 
 a positive example becomes a negative example, and vice versa, and the scores are flipped so that a score of A becomes 1-A.
 
-- Rescaling scores for decision curves so that the cost value of a positive and negative misclassification sums to 2 (like for Brier curves).
+- Rescaling costs for decision curves so that the cost value of a positive and negative misclassification sums to 2 (like for Brier curves).
 
 
 
