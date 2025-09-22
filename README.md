@@ -4,6 +4,10 @@
 
 ## Paper details
 
+This code accompanies the paper:
+
+Millard LAC, Flach PA. Evaluating classification performance across operating contexts: A comparison of decision curve analysis
+and cost curves. medRxiv. 2025.
 
 ## Summary of notebooks
 
